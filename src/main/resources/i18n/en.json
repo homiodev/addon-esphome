@@ -1,0 +1,27 @@
+{
+  "field": {
+    "communicator": "Communicator",
+    "nativeApiPassword": "Native Api password",
+    "nativeApiPort": "Native Api port",
+    "topicPrefix": "Topic prefix",
+    "logPrefix": "Login prefix",
+    "discoveryPrefix": "Discovery prefix"
+  },
+  "SELECTION": {
+    "NATIVE_API": "Native API"
+  },
+  "CONSOLE": {
+    "esphome": "ESPHome"
+  },
+  "SIDEBAR": {
+    "ESPHomeDeviceEntity": "ESPHome"
+  },
+  "WORKSPACE": {
+    "esphome": "ESPHome"
+  },
+  "CONTEXT": {
+    "ACTION": {
+      "UPLOAD_FONT": "Upload font"
+    }
+  }
+}
