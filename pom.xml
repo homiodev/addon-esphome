@@ -6,16 +6,13 @@
   <modelVersion>4.0.0</modelVersion>
   <name>ESPHome cloud</name>
   <packaging>jar</packaging>
+  <version>1.0.0-SNAPSHOT</version>
 
   <parent>
     <artifactId>addon-parent</artifactId>
     <groupId>org.homio.addon</groupId>
-    <version>1.2.8-SNAPSHOT</version>
+    <version>1.2.8</version>
   </parent>
-
-  <properties>
-    <protobuf-maven-plugin.version>0.7.1</protobuf-maven-plugin.version>
-  </properties>
 
   <build>
     <plugins>
@@ -65,5 +62,4 @@
     </dependency>
   </dependencies>
 
-  <version>1.0.0-SNAPSHOT</version>
 </project>

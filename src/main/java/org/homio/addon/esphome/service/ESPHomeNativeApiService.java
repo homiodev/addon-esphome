@@ -77,6 +77,7 @@ import org.homio.api.state.DecimalType;
 import org.homio.api.state.OnOffType;
 import org.homio.api.state.State;
 import org.homio.api.state.StringType;
+import org.homio.api.util.CommonUtils;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -114,7 +115,7 @@ public class ESPHomeNativeApiService implements PacketListener, CommunicatorServ
         this.service = service;
         this.entity = service.getEntity();
         this.entityID = service.getEntityID();
-        this.ipAddress = service.getEntity().getIpAddress();
+        this.ipAddress = service.getEntity().getDeviceIpAddress();
         this.connectionSelector = new ConnectionSelector();
         registerMessageHandlers();
     }
@@ -180,7 +181,7 @@ public class ESPHomeNativeApiService implements PacketListener, CommunicatorServ
             connection.send(SubscribeStatesRequest.getDefaultInstance());
             return ActionResponseModel.fired();
         } catch (ProtocolAPIError ex) {
-            log.error("[{}] Error sending refresh command to {}. Ex: {}", entityID, entity.getIpAddress(), ex.getMessage());
+            log.error("[{}] Error sending refresh command to {}. Ex: {}", entityID, entity.getDeviceIpAddress(), ex.getMessage());
             return ActionResponseModel.showError(ex);
         }
     }
@@ -296,9 +297,9 @@ public class ESPHomeNativeApiService implements PacketListener, CommunicatorServ
                                                     .build();
             connectionState = ConnectionState.HELLO_SENT;
             connection.send(helloRequest);
-        } catch (ProtocolException e) {
-            log.warn("[{}]: ESPHome. Error initial connection", entityID, e);
-            service.setDeviceStatus(OFFLINE, e.getMessage());
+        } catch (ProtocolException ex) {
+            log.warn("[{}]: ESPHome. Error initial connection: {}", entityID, CommonUtils.getErrorMessage(ex));
+            service.setDeviceStatus(OFFLINE, ex.getMessage());
             if (!disposed) { // Don't reconnect if we've been disposed
                 scheduleConnect(CONNECT_TIMEOUT * 2);
             }
@@ -340,8 +341,8 @@ public class ESPHomeNativeApiService implements PacketListener, CommunicatorServ
                 } else {
                     try {
                         abstractMessageHandler.stateHandler.accept(this, message);
-                    } catch (Exception e) {
-                        log.warn("Error updating OH state", e);
+                    } catch (Exception ex) {
+                        log.warn("[{}]: Error updating state: {}", entityID, CommonUtils.getErrorMessage(ex));
                     }
                 }
             } else {
@@ -575,8 +576,8 @@ public class ESPHomeNativeApiService implements PacketListener, CommunicatorServ
         Light(ListEntitiesLightResponse.class, LightStateResponse.class, (service, rsp) ->
             service.addEndpoint(rsp.getKey(), rsp.getUniqueId(), rsp.getName(), null, EndpointType.color, ep -> {
             }), (service, rsp) ->
-            log.warn("Unhandled state for esp light {} - in fact the Light "
-                + "component isn't really implemented yet. Contribution needed", rsp.getKey()));
+            log.warn("[{}]: Unhandled state for esp light {} - in fact the Light "
+                + "component isn't really implemented yet. Contribution needed", service.entityID, rsp.getKey()));
 
         private final Class<? extends GeneratedMessageV3> listEntitiesClass;
         private final Class<? extends GeneratedMessageV3> stateClass;

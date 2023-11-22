@@ -3,7 +3,6 @@ package org.homio.addon.esphome.service;
 import static org.homio.addon.esphome.service.ESPHomeProjectService.buildTopics;
 import static org.homio.api.model.Status.OFFLINE;
 import static org.homio.api.model.Status.ONLINE;
-import static org.homio.api.model.endpoint.DeviceEndpoint.ENDPOINT_LAST_SEEN;
 import static org.homio.api.util.JsonUtils.OBJECT_MAPPER;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -48,7 +47,7 @@ public class ESPHomeMQTTApiService implements CommunicatorService {
     public void initialize() {
         initializeMQTT();
 
-        context.bgp().ping(entity.getIeeeAddress(), entity.getIpAddress(), available ->
+        context.bgp().ping(entity.getIeeeAddress(), entity.getDeviceIpAddress(), available ->
             service.setDeviceStatus(available ? ONLINE : OFFLINE, null));
     }
 

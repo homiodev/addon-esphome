@@ -106,7 +106,7 @@ public class ESPHomeProjectEntity extends MicroControllerBaseEntity
 
     @Override
     public long getEntityServiceHashCode() {
-        return getJsonDataHashCode("mqtt", "start");
+        return getJsonDataHashCode("mqtt");
     }
 
     @UIField(order = 100, required = true, type = UIFieldType.Chips)

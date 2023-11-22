@@ -25,6 +25,7 @@ import org.homio.api.entity.device.DeviceEndpointsBehaviourContract;
 import org.homio.api.entity.version.HasFirmwareVersion;
 import org.homio.api.model.ActionResponseModel;
 import org.homio.api.model.Icon;
+import org.homio.api.model.WebAddress;
 import org.homio.api.model.device.ConfigDeviceDefinition;
 import org.homio.api.model.endpoint.DeviceEndpoint;
 import org.homio.api.service.EntityService;
@@ -33,6 +34,7 @@ import org.homio.api.ui.UISidebarMenu.TopSidebarMenu;
 import org.homio.api.ui.field.UIField;
 import org.homio.api.ui.field.UIFieldGroup;
 import org.homio.api.ui.field.UIFieldIgnore;
+import org.homio.api.ui.field.UIFieldType;
 import org.homio.api.ui.field.action.v1.UIInputBuilder;
 import org.homio.api.ui.field.condition.UIFieldShowOnCondition;
 import org.jetbrains.annotations.NotNull;
@@ -66,7 +68,7 @@ public final class ESPHomeDeviceEntity extends DeviceBaseEntity implements
 
     @Override
     public String getModel() {
-        return getJsonData("model", getIpAddress() + " - " + getPlatform());
+        return getJsonData("model", getDeviceIpAddress() + " - " + getPlatform());
     }
 
     @Override
@@ -109,15 +111,20 @@ public final class ESPHomeDeviceEntity extends DeviceBaseEntity implements
         return getJsonData("nw");
     }
 
-    @UIField(order = 100, hideOnEmpty = true, hideInEdit = true)
+    @UIField(order = 100, hideOnEmpty = true, hideInEdit = true, type = UIFieldType.HTML)
     @UIFieldShowOnCondition("return !context.get('compactMode')")
-    public String getIpAddress() {
+    public WebAddress getIpAddress() {
+        return new WebAddress(getDeviceIpAddress());
+    }
+
+    @JsonIgnore
+    public String getDeviceIpAddress() {
         return getJsonData("ip");
     }
 
     @Override
     public @Nullable Set<String> getConfigurationErrors() {
-        if (getIpAddress().isEmpty()) {
+        if (getDeviceIpAddress().isEmpty()) {
             return Set.of("ERROR.NO_HOST");
         }
         return null;
@@ -220,8 +227,8 @@ public final class ESPHomeDeviceEntity extends DeviceBaseEntity implements
     }
 
     @Override
-    public String getFallbackImageIdentifier() {
-        return getPlatform();
+    public String getImageIdentifier() {
+        return getPlatform() + ".png";
     }
 
     @Override

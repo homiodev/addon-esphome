@@ -51,6 +51,7 @@ public class ESPHomeProjectService extends ServiceInstance<ESPHomeProjectEntity>
     @Override
     public void destroy(boolean forRestart, Exception ex) {
         this.dispose(ex);
+        context.service().unRegisterUrlProxy("esphome");
         context.ui().console().unRegisterPlugin("esphome");
         mqttEntityService.removeListener("esphome-discovery");
     }
@@ -74,8 +75,9 @@ public class ESPHomeProjectService extends ServiceInstance<ESPHomeProjectEntity>
         mqttEntityService.addPayloadListener(topics, "esphome-discovery", entityID, log,
             (topic, payload) -> handleDiscovery(payload));
 
+        String url = context.service().registerUrlProxy("esphome", "http://localhost:6052", builder -> {});
         context.ui().console().registerPlugin("esphome",
-            new ESPHomeFrontendConsolePlugin(context, new FrameConfiguration("http://localhost:6052")));
+            new ESPHomeFrontendConsolePlugin(context, new FrameConfiguration(url)));
     }
 
     @Override
@@ -122,7 +124,7 @@ public class ESPHomeProjectService extends ServiceInstance<ESPHomeProjectEntity>
         } else {
             device.setIeeeAddress(mac);
             device.setName(boardInfo.get("name").asText());
-            existedDevices.put(device.getIpAddress(), context.db().save(device));
+            existedDevices.put(device.getDeviceIpAddress(), context.db().save(device));
         }
         CommunicatorService apiService = device.getService().getApiService();
         if (apiService instanceof ESPHomeMQTTApiService service) {
@@ -139,7 +141,7 @@ public class ESPHomeProjectService extends ServiceInstance<ESPHomeProjectEntity>
             device = existedDevices.get(mac);
         }
         if (device.tryUpdate(mac, payload)) {
-            existedDevices.put(device.getIpAddress(), context.db().save(device));
+            existedDevices.put(device.getDeviceIpAddress(), context.db().save(device));
         }
     }
 
