@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <name>ESPHome cloud</name>
   <packaging>jar</packaging>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
 
   <parent>
     <artifactId>addon-parent</artifactId>
@@ -60,9 +60,4 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
-
-
-  <scm>
-    <tag>1.0.0</tag>
-  </scm>
 </project>
