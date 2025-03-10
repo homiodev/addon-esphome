@@ -6,25 +6,25 @@ import org.homio.api.ui.field.condition.UIFieldShowOnCondition;
 
 public interface ESPHomeMQTTConfiguration extends HasJsonData {
 
-    String getName();
+  String getName();
 
-    @UIField(order = 110, required = true)
-    @UIFieldShowOnCondition("return !context.get('compactMode') && context.get('communicator') == 'MQTT'")
-    default String getTopicPrefix() {
-        return getJsonData("tp", getName());
-    }
+  @UIField(order = 110, required = true)
+  @UIFieldShowOnCondition("return !context.get('compactMode') && context.get('communicator') == 'MQTT'")
+  default String getTopicPrefix() {
+    return getJsonData("tp", getName());
+  }
 
-    default void setTopicPrefix(String value) {
-        setJsonData("tp", value);
-    }
+  default void setTopicPrefix(String value) {
+    setJsonData("tp", value);
+  }
 
-    @UIField(order = 120, required = true)
-    @UIFieldShowOnCondition("return !context.get('compactMode') && context.get('communicator') == 'MQTT'")
-    default String getLogPrefix() {
-        return getJsonData("lp", getName());
-    }
+  @UIField(order = 120, required = true)
+  @UIFieldShowOnCondition("return !context.get('compactMode') && context.get('communicator') == 'MQTT'")
+  default String getLogPrefix() {
+    return getJsonData("lp", getName());
+  }
 
-    default void setLogPrefix(String value) {
-        setJsonData("lp", value);
-    }
+  default void setLogPrefix(String value) {
+    setJsonData("lp", value);
+  }
 }

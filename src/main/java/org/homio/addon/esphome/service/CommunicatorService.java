@@ -4,11 +4,11 @@ import org.homio.api.model.ActionResponseModel;
 
 public interface CommunicatorService {
 
-    void initialize();
+  void initialize();
 
-    void destroy();
+  void destroy();
 
-    default ActionResponseModel refresh() {
-        return ActionResponseModel.showError("Not implemented");
-    }
+  default ActionResponseModel refresh() {
+    return ActionResponseModel.showError("Not implemented");
+  }
 }

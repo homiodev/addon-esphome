@@ -53,7 +53,7 @@ public class ESPHomeHandler /*extends BaseThingHandler implements PacketListener
                     return;
                 }
 
-                AbstractMessageHandler<? extends GeneratedMessageV3, ? extends GeneratedMessageV3> abstractMessageHandler = commandTypeToHandlerMap
+                AbstractMessageHandler<? extends GeneratedMessage, ? extends GeneratedMessage> abstractMessageHandler = commandTypeToHandlerMap
                         .get(commandClass);
                 if (abstractMessageHandler == null) {
                     log.warn("[{}] No message handler for command class {}", config.hostname, commandClass);

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Scratch3ESPHomeBlocks extends Scratch3BaseDeviceBlocks {
 
-    public Scratch3ESPHomeBlocks(Context context, ESPHomeEntrypoint entrypoint) {
-        super("#8D8D8D", context, entrypoint, ESPHomeDeviceEntity.PREFIX);
-    }
+  public Scratch3ESPHomeBlocks(Context context, ESPHomeEntrypoint entrypoint) {
+    super("#8D8D8D", context, entrypoint, ESPHomeDeviceEntity.PREFIX);
+  }
 }

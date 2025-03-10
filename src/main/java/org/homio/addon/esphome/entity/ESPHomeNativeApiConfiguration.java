@@ -10,51 +10,63 @@ import org.homio.api.util.SecureString;
 
 public interface ESPHomeNativeApiConfiguration extends HasJsonData {
 
-    @UIField(order = 1)
-    @UIFieldPort
-    @UIFieldTab("NATIVE_API")
-    @UIFieldShowOnCondition("return !context.get('compactMode') && context.get('communicator') != 'MQTT'")
-    default SecureString getNativeApiPassword() {
-        return getJsonSecure("napwd", "");
-    }
+  @UIField(order = 1)
+  @UIFieldPort
+  @UIFieldTab("NATIVE_API")
+  @UIFieldShowOnCondition("return !context.get('compactMode') && context.get('communicator') != 'MQTT'")
+  default SecureString getNativeApiPassword() {
+    return getJsonSecure("napwd", "");
+  }
 
-    default void setNativeApiPassword(String value) {
-        setJsonDataSecure("napwd", value);
-    }
+  default void setNativeApiPassword(String value) {
+    setJsonDataSecure("napwd", value);
+  }
 
-    @UIField(order = 2)
-    @UIFieldPort
-    @UIFieldTab("NATIVE_API")
-    @UIFieldShowOnCondition("return !context.get('compactMode') && context.get('communicator') != 'MQTT'")
-    default int getNativeApiPort() {
-        return getJsonData("nap", 6053);
-    }
+  @UIField(order = 1)
+  @UIFieldPort
+  @UIFieldTab("NATIVE_API")
+  @UIFieldShowOnCondition("return !context.get('compactMode') && context.get('communicator') != 'MQTT'")
+  default SecureString getNativeEncryptionKey() {
+    return getJsonSecure("naek", "");
+  }
 
-    default void setNativeApiPort(int value) {
-        setJsonData("nap", value);
-    }
+  default void setNativeEncryptionKey(String value) {
+    setJsonDataSecure("naek", value);
+  }
 
-    @UIField(order = 3)
-    @UIFieldSlider(min = 10, max = 60)
-    @UIFieldTab("NATIVE_API")
-    @UIFieldShowOnCondition("return !context.get('compactMode') && context.get('communicator') != 'MQTT'")
-    default int getPingInterval() {
-        return getJsonData("pi", 10);
-    }
+  @UIField(order = 2)
+  @UIFieldPort
+  @UIFieldTab("NATIVE_API")
+  @UIFieldShowOnCondition("return !context.get('compactMode') && context.get('communicator') != 'MQTT'")
+  default int getNativeApiPort() {
+    return getJsonData("nap", 6053);
+  }
 
-    default void setPingInterval(int value) {
-        setJsonData("pi", value);
-    }
+  default void setNativeApiPort(int value) {
+    setJsonData("nap", value);
+  }
 
-    @UIField(order = 4)
-    @UIFieldSlider(min = 1, max = 10)
-    @UIFieldTab("NATIVE_API")
-    @UIFieldShowOnCondition("return !context.get('compactMode') && context.get('communicator') != 'MQTT'")
-    default int getMaxPingTimeout() {
-        return getJsonData("mpt", 4);
-    }
+  @UIField(order = 3)
+  @UIFieldSlider(min = 10, max = 60)
+  @UIFieldTab("NATIVE_API")
+  @UIFieldShowOnCondition("return !context.get('compactMode') && context.get('communicator') != 'MQTT'")
+  default int getPingInterval() {
+    return getJsonData("pi", 10);
+  }
 
-    default void setMaxPingTimeout(int value) {
-        setJsonData("mpt", value);
-    }
+  default void setPingInterval(int value) {
+    setJsonData("pi", value);
+  }
+
+  @UIField(order = 4)
+  @UIFieldSlider(min = 1, max = 10)
+  @UIFieldTab("NATIVE_API")
+  @UIFieldShowOnCondition("return !context.get('compactMode') && context.get('communicator') != 'MQTT'")
+  default int getMaxPingTimeout() {
+    return getJsonData("mpt", 4);
+  }
+
+  default void setMaxPingTimeout(int value) {
+    setJsonData("mpt", value);
+  }
 }
