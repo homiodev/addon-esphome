@@ -11,7 +11,7 @@
     <parent>
         <artifactId>addon-parent</artifactId>
         <groupId>org.homio.addon</groupId>
-        <version>1.2.8</version>
+        <version>1.2.9-SNAPSHOT</version>
     </parent>
 
     <build>
@@ -62,4 +62,30 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/homiodev/addon-esphome</url>
+        </repository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>github-addon-parent</id>
+            <url>https://maven.pkg.github.com/homiodev/addon-parent</url>
+        </repository>
+        <repository>
+            <id>github-homio-dependency</id>
+            <url>https://maven.pkg.github.com/homiodev/homio-dependency</url>
+        </repository>
+        <repository>
+            <id>github-homio-hquery</id>
+            <url>https://maven.pkg.github.com/homiodev/homio-hquery</url>
+        </repository>
+        <repository>
+            <id>github-homio-api</id>
+            <url>https://maven.pkg.github.com/homiodev/homio-api</url>
+        </repository>
+    </repositories>
 </project>
