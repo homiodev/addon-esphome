@@ -120,7 +120,7 @@ public class ESPHomeMQTTApiService implements CommunicatorService {
   private void handleDebug(ObjectNode payload) {
     String debugText = payload.get("raw").asText().replaceAll("\u001B\\[[;\\d]*m*", "");
     if (debugText.contains("Starting OTA Update")) {
-      otaUpdateProgressBar = context.ui().progress().createProgressBar(entityID, false);
+      otaUpdateProgressBar = context.ui().progress().progressBar(entityID);
       otaUpdateProgressBar.progress(1, debugText);
     } else if (debugText.contains("OTA in progress")) {
       Pattern pattern = Pattern.compile("\\d+\\.\\d+");
